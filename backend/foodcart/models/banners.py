@@ -12,6 +12,7 @@ class Banner(Base):
     title = Column(String(200), index=True)
     description = Column(Text, nullable=True)
     banner_order = Column('banner position', Integer, default=0, index=True)
+    image_file = Column(Text, nullable=False)
 
     def __str__(self) -> str:
         return self.title
