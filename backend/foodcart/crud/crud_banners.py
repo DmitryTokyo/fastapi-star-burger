@@ -1,18 +1,23 @@
+from select import select
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy.orm import Session
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.future import select
 
 from backend.foodcart.models.banners import Banner
 from backend.foodcart.schemas.banners import BannerIn
 
 
-def get_banners(db: Session):
-    return db.query(Banner).all()
+async def get_banners(db: AsyncSession) -> list[Banner]:
+    statement = select(Banner)
+    db_execute = await db.execute(statement)
+    return db_execute.scalars().all()
 
 
-def create_banner(db: Session, banner_in: BannerIn):
+async def create_banner(db: AsyncSession, banner_in: BannerIn, picture_filename: str):
     banner_in_data = jsonable_encoder(banner_in)
+    banner_in_data |= {'image_file': picture_filename}
     banner_obj = Banner(**banner_in_data)
     db.add(banner_obj)
-    db.commit()
-    db.refresh(banner_obj)
+    await db.commit()
+    await db.refresh(banner_obj)
     return banner_obj
