@@ -39,3 +39,5 @@ ENV/
 .mypy_cache/
 .dmypy.json
 dmypy.json
+.vscode/launch.json
+backend/media/*
