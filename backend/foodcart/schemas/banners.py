@@ -13,6 +13,7 @@ class BannerIn(BannerBase):
 
 class BannerOut(BannerBase):
     id: int
+    image_file: str
 
     class Config:
         orm_mode = True
