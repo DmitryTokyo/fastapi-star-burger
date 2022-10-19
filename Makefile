@@ -3,3 +3,6 @@ migrate:
 
 runserver:
 	uvicorn backend.server:app --reload
+
+style:
+	flake8
