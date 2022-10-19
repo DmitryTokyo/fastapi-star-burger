@@ -21,6 +21,7 @@ if config.config_file_name is not None:
 # add your model's MetaData object here
 # for 'autogenerate' support
 from backend.foodcart.models.banners import Banner
+from backend.foodcart.models.products import Product, ProductCategory
 from backend.foodcart.models.restaurants import Restaurant
 
 target_metadata = Base.metadata
