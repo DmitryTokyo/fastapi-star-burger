@@ -20,6 +20,8 @@ black = "^22.10.0"
 mypy = "^0.982"
 pylint = "^2.15.4"
 flake8 = "^5.0.4"
+aioredis = "^2.0.1"
+sqladmin = "^0.6.1"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.7.0"
