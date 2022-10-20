@@ -3,7 +3,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.foodcart.models.products import Product, ProductCategory
-from backend.foodcart.schemas.products import ProductIn, ProductCategoryIn
+from backend.foodcart.schemas.products import ProductIn, ProductCategoryIn, ProductCategoryOut
 
 
 async def get_products(db: AsyncSession) -> list[Product]:
@@ -28,7 +28,7 @@ async def get_product_categories(db: AsyncSession) -> list[ProductCategory]:
     return db_execute.scalars().all()
 
 
-async def create_product_category(db: AsyncSession, product_category_in: ProductCategoryIn) -> list[ProductCategoryIn]:
+async def create_product_category(db: AsyncSession, product_category_in: ProductCategoryIn) -> ProductCategoryOut:
     product_category_in_data = jsonable_encoder(product_category_in)
     product_category_obj = ProductCategory(**product_category_in_data)
     db.add(product_category_obj)
