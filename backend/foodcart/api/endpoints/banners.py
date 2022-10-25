@@ -3,7 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.db_deps import get_db
 from backend.foodcart.schemas.banners import BannerOut, BannerIn
-from backend.foodcart.crud.crud_banners import create_banner, get_banners
+from backend.foodcart.crud.crud_banners import create_banner, get_banners, delete_banner
 from backend.foodcart.utils.save_file import save_images_to_media
 
 router = APIRouter()
@@ -23,3 +23,8 @@ async def create_new_banner(
     await save_images_to_media(banner_picture)
     banner = await create_banner(db, banner_in, banner_picture.filename)
     return {'filename': banner_picture.filename, 'banner': banner}
+
+
+@router.delete('/', status_code=204)
+async def delete_exist_banner(banner_id: int, db: AsyncSession = Depends(get_db)) -> int:
+    return await delete_banner(db, banner_id)

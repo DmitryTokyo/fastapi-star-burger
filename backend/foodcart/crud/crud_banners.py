@@ -1,5 +1,6 @@
 from select import select
 from fastapi.encoders import jsonable_encoder
+from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -21,3 +22,10 @@ async def create_banner(db: AsyncSession, banner_in: BannerIn, picture_filename:
     await db.commit()
     await db.refresh(banner_obj)
     return banner_obj
+
+
+async def delete_banner(db: AsyncSession, banner_id: int) -> int:
+    stmt = delete(Banner).where(Banner.id == banner_id)
+    await db.execute(stmt)
+    await db.commit()
+    return banner_id
