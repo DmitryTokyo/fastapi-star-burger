@@ -5,7 +5,7 @@ from backend.db.db_deps import get_db
 from backend.foodcart.crud.crud_products import get_products, create_product, get_product_categories, \
     create_product_category
 from backend.foodcart.schemas.products import ProductOut, ProductIn, ProductCategoryOut, ProductCategoryIn
-from backend.foodcart.services.images import save_image
+from backend.star_burger.utils.images import save_image
 
 router = APIRouter()
 

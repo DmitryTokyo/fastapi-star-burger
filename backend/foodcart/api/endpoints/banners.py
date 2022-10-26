@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from backend.db.db_deps import get_db
 from backend.foodcart.schemas.banners import BannerOut, BannerIn
 from backend.foodcart.crud.crud_banners import create_banner, get_banners, delete_banner
-from backend.foodcart.services.images import save_image
+from backend.star_burger.utils.images import save_image
 
 router = APIRouter()
 

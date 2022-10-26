@@ -1,7 +1,7 @@
 import aiofiles
 from fastapi import UploadFile
 
-from backend.config import settings
+from backend.config.settings import settings
 
 
 async def save_image(file: UploadFile) -> None:
