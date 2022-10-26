@@ -13,7 +13,7 @@ const BannerComponent = (props) => {
   let carousel_items = props.banners.map( (cfg, index) => {
     return (
       <div className={index ? 'item' : 'item active'} key={index}>
-        <img src={cfg.image_file} alt={cfg.title} style={bannerStyle}/>
+        <img src={`images/${cfg.image_file}`} alt={cfg.title} style={bannerStyle}/>
         <div className="carousel-caption">
           <h3>{cfg.title}</h3>
           <p>{cfg.text}</p>
