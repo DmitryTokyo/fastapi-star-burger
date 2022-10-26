@@ -10,6 +10,7 @@ from backend.admin.admin import BannerAdmin
 from backend.config.settings import settings
 from backend.db.db_init import engine
 from backend.foodcart.api.routers import api_router
+from backend.star_burger.routers import router
 
 app = FastAPI(title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json")
 
@@ -30,6 +31,7 @@ async def read_item(request: Request):
     return templates.TemplateResponse('index.html', {'request': request})
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+app.include_router(router)
 
 admin = Admin(app, engine)
 admin.add_view(BannerAdmin)
