@@ -1,8 +1,6 @@
 import os
 import secrets
-from pathlib import Path
 
-from fastapi.staticfiles import StaticFiles
 from pydantic import BaseSettings, AnyHttpUrl
 
 
