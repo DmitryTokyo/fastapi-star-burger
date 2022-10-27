@@ -4,14 +4,17 @@ from pydantic import BaseModel
 class RestaurantBase(BaseModel):
     title: str
     address: str
+    contact_phone: str
 
 
 class RestaurantIn(RestaurantBase):
-    contact_phone: str
+    pass
 
 
 class RestaurantOut(RestaurantBase):
     id: int
-    longitude: float
-    latitude: float
-    
+    longitude: float | None = None
+    latitude: float | None = None
+
+    class Config:
+        orm_mode = True
