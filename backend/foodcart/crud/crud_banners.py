@@ -28,4 +28,3 @@ async def delete_banner(db: AsyncSession, banner_id: int) -> int:
     stmt = delete(Banner).where(Banner.id == banner_id)
     await db.execute(stmt)
     await db.commit()
-    return banner_id
