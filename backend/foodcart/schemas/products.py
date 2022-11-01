@@ -12,7 +12,10 @@ class ProductCategoryIn(ProductCategoryBase):
 
 
 class ProductCategoryOut(ProductCategoryBase):
-    pass
+    id: int
+
+    class Config:
+        orm_mode = True
 
 
 class ProductBase(BaseModel):
@@ -29,3 +32,6 @@ class ProductIn(ProductBase):
 class ProductOut(ProductBase):
     id: int
     special_status: bool
+
+    class Config:
+        orm_mode = True
