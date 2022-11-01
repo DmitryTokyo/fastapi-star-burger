@@ -1,9 +1,9 @@
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select
+from sqlalchemy import select, delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.foodcart.models.products import Product, ProductCategory
-from backend.foodcart.schemas.products import ProductIn, ProductCategoryIn, ProductCategoryOut
+from backend.foodcart.schemas.products import ProductIn, ProductCategoryIn
 
 
 async def get_products(db: AsyncSession) -> list[Product]:
@@ -28,10 +28,16 @@ async def get_product_categories(db: AsyncSession) -> list[ProductCategory]:
     return db_execute.scalars().all()
 
 
-async def create_product_category(db: AsyncSession, product_category_in: ProductCategoryIn) -> ProductCategoryOut:
+async def create_product_category(db: AsyncSession, product_category_in: ProductCategoryIn) -> ProductCategory:
     product_category_in_data = jsonable_encoder(product_category_in)
     product_category_obj = ProductCategory(**product_category_in_data)
     db.add(product_category_obj)
     await db.commit()
     await db.refresh(product_category_obj)
     return product_category_obj
+
+
+async def delete_product_category(db: AsyncSession, product_category_id: int) -> None:
+    smtp = delete(ProductCategory).where(ProductCategory.id == product_category_id)
+    await db.execute(smtp)
+    await db.commit()
