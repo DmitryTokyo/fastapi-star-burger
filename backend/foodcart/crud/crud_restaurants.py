@@ -7,8 +7,8 @@ from backend.foodcart.schemas.restaurants import RestaurantIn, RestaurantOut
 
 
 async def get_restaurants(db: AsyncSession) -> list[RestaurantOut]:
-    statement = select(Restaurant)
-    db_execute = await db.execute(statement)
+    stmt = select(Restaurant)
+    db_execute = await db.execute(stmt)
     return db_execute.scalars().all()
 
 

@@ -23,14 +23,14 @@ async def create_product(db: AsyncSession, restaurant_in: ProductIn, picture_fil
 
 
 async def delete_product(db: AsyncSession, product_id: int) -> None:
-    smtp = delete(Product).where(Product.od == product_id)
-    await db.execute(smtp)
+    stmt = delete(Product).where(Product.od == product_id)
+    await db.execute(stmt)
     await db.commit()
 
 
 async def get_product_categories(db: AsyncSession) -> list[ProductCategory]:
-    statement = select(ProductCategory)
-    db_execute = await db.execute(statement)
+    stmt = select(ProductCategory)
+    db_execute = await db.execute(stmt)
     return db_execute.scalars().all()
 
 
@@ -44,6 +44,6 @@ async def create_product_category(db: AsyncSession, product_category_in: Product
 
 
 async def delete_product_category(db: AsyncSession, product_category_id: int) -> None:
-    smtp = delete(ProductCategory).where(ProductCategory.id == product_category_id)
-    await db.execute(smtp)
+    stmt = delete(ProductCategory).where(ProductCategory.id == product_category_id)
+    await db.execute(stmt)
     await db.commit()

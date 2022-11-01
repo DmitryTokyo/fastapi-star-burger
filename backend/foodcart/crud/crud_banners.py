@@ -9,8 +9,8 @@ from backend.foodcart.schemas.banners import BannerIn
 
 
 async def get_banners(db: AsyncSession) -> list[Banner]:
-    statement = select(Banner)
-    db_execute = await db.execute(statement)
+    stmt = select(Banner)
+    db_execute = await db.execute(stmt)
     return db_execute.scalars().all()
 
 

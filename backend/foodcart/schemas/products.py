@@ -22,16 +22,17 @@ class ProductBase(BaseModel):
     title: str
     price: Decimal
     image_url: str
-    product_category: ProductCategoryOut
 
 
 class ProductIn(ProductBase):
     ingredients: str | None
+    product_category_id: int
 
 
 class ProductOut(ProductBase):
     id: int
     special_status: bool
+    product_category: ProductCategoryOut
 
     class Config:
         orm_mode = True
