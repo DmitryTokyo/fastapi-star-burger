@@ -14,7 +14,7 @@ async def get_banners(db: AsyncSession) -> list[Banner]:
     return db_execute.scalars().all()
 
 
-async def create_banner(db: AsyncSession, banner_in: BannerIn, picture_filename: str):
+async def create_banner(db: AsyncSession, banner_in: BannerIn, picture_filename: str) -> Banner:
     banner_in_data = jsonable_encoder(banner_in)
     banner_in_data |= {'image_file': picture_filename}
     banner_obj = Banner(**banner_in_data)
@@ -24,7 +24,7 @@ async def create_banner(db: AsyncSession, banner_in: BannerIn, picture_filename:
     return banner_obj
 
 
-async def delete_banner(db: AsyncSession, banner_id: int) -> int:
+async def delete_banner(db: AsyncSession, banner_id: int) -> None:
     stmt = delete(Banner).where(Banner.id == banner_id)
     await db.execute(stmt)
     await db.commit()
