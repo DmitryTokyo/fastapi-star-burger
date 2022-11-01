@@ -22,6 +22,12 @@ async def create_product(db: AsyncSession, restaurant_in: ProductIn, picture_fil
     return product_obj
 
 
+async def delete_product(db: AsyncSession, product_id: int) -> None:
+    smtp = delete(Product).where(Product.od == product_id)
+    await db.execute(smtp)
+    await db.commit()
+
+
 async def get_product_categories(db: AsyncSession) -> list[ProductCategory]:
     statement = select(ProductCategory)
     db_execute = await db.execute(statement)

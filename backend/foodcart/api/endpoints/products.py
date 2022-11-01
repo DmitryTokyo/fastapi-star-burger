@@ -2,8 +2,10 @@ from fastapi import APIRouter, Depends, UploadFile
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from backend.db.db_deps import get_db
-from backend.foodcart.crud.crud_products import get_products, create_product, get_product_categories, \
-    create_product_category, delete_product_category
+from backend.foodcart.crud.crud_products import (
+    get_products, create_product, get_product_categories, create_product_category, delete_product_category,
+    delete_product,
+)
 from backend.foodcart.schemas.products import ProductOut, ProductIn, ProductCategoryOut, ProductCategoryIn
 from backend.star_burger.utils.images import save_image
 
@@ -24,6 +26,11 @@ async def create_new_product(
     await save_image(product_picture)
     product = await create_product(db, product_in, product_picture.filename)
     return {'filename': product_picture.filename, 'banner': product}
+
+
+@router.delete('/', status_code=204)
+async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_db)) -> None:
+    return await delete_product(db, product_id)
 
 
 @router.get('/categories/', response_model=list[ProductCategoryOut])
