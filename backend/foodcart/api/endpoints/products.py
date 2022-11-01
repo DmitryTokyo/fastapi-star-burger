@@ -33,7 +33,7 @@ async def read_product_categories(db: AsyncSession = Depends(get_db)):
 
 
 @router.post('/categories/', response_model=ProductCategoryOut, status_code=201)
-async def create_new_category(
+async def create_new_product_category(
         category_in: ProductCategoryIn,
         db: AsyncSession = Depends(get_db),
 ):
