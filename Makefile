@@ -8,4 +8,4 @@ style:
 	flake8
 
 front:
-	./frontend/node_modules/.bin/parcel watch frontend/src/index.js --dist-dir frontend/bundles --public-url="./"
+	./frontend/node_modules/.bin/parcel watch frontend/src/index.js --dist-dir frontend/bundles --public-url='./'
