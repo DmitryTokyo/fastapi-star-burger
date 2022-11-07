@@ -38,14 +38,14 @@ class Product extends Component{
   }
 
   render(){
-    let image = this.props.product.image;
+    let image = this.props.product.image_url;
     let name = this.props.product.name;
     let price = this.props.product.price;
     let id = this.props.product.id;
     return (
       <div className="product">
         <div className="product-image">
-          <img src={image} alt={name} onClick={this.quickView.bind(this)}/>
+          <img src={`images/${image}`} alt={name} onClick={this.quickView.bind(this)}/>
         </div>
         <h4 className="product-name">{name}</h4>
         <p className="product-price currency">{price}</p>
