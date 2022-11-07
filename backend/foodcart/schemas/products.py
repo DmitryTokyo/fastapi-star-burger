@@ -21,7 +21,6 @@ class ProductCategoryOut(ProductCategoryBase):
 class ProductBase(BaseModel):
     title: str
     price: Decimal
-    image_url: str
 
 
 class ProductIn(ProductBase):
@@ -33,6 +32,7 @@ class ProductOut(ProductBase):
     id: int
     special_status: bool
     product_category: ProductCategoryOut
+    image_url: str
 
     class Config:
         orm_mode = True
