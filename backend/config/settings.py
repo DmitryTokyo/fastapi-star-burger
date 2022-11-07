@@ -12,8 +12,6 @@ class Settings(BaseSettings):
     SECRET_KEY: str = os.environ.get('SECRET_KEY', default=secrets.token_urlsafe(32))
 
     DB_URL: str = 'postgresql+asyncpg://andimeon:565651db@localhost:5432/star_burger_fast'
-    PROJECT_NAME: str = 'Fast api star burger version'
-
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = [
         'http://localhost',
         'http://localhost:8000',
