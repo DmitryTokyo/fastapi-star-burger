@@ -21,7 +21,7 @@ async def create_restaurant(db: AsyncSession, restaurant_in: RestaurantIn) -> Re
     return restaurant_obj
 
 
-async def delete_restaurant(db: AsyncSession, restaurant_id: int) -> int:
+async def delete_restaurant(db: AsyncSession, restaurant_id: int) -> None:
     stmt = delete(Restaurant).where(Restaurant.id == restaurant_id)
     await db.execute(stmt)
     await db.commit()
