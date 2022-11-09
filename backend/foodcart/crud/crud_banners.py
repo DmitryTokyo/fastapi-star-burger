@@ -1,4 +1,3 @@
-from select import select
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
