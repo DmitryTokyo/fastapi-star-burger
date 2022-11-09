@@ -1050,6 +1050,14 @@ optional = false
 python-versions = ">=3.6,<4.0"
 
 [[package]]
+name = "types-aiofiles"
+version = "22.1.0.2"
+description = "Typing stubs for aiofiles"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "typing-extensions"
 version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
@@ -1122,7 +1130,7 @@ email = ["email-validator"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "4d92af32bed2d67c50e9fe58df23f1db85f9b499f3243873361c6ae9fe517b7d"
+content-hash = "f187daff788f8cdc2abac32fb461fcfb645f401d0aed86114247624476591e9e"
 
 [metadata.files]
 aiofiles = []
@@ -1216,6 +1224,7 @@ stdlib-list = []
 toml = []
 tomli = []
 tomlkit = []
+types-aiofiles = []
 typing-extensions = []
 urllib3 = []
 uvicorn = []
