@@ -1,5 +1,4 @@
 from fastapi import APIRouter, Depends
-from pydantic import ValidationError
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_204_NO_CONTENT, HTTP_201_CREATED, HTTP_200_OK
 

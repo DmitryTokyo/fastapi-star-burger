@@ -7,7 +7,7 @@ from backend.foodcart.crud.crud_products import (
     delete_product,
 )
 from backend.foodcart.schemas.products import ProductOut, ProductIn, ProductCategoryOut, ProductCategoryIn
-from backend.star_burger.utils.images import save_image
+from backend.star_burger.utils.images import save_image_to_server
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ async def create_new_product(
     product_in: ProductIn = Depends(),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, ProductOut | str]:
-    await save_image(product_picture)
+    await save_image_to_server(product_picture)
     product = await create_product(db, product_in, product_picture.filename)
     return {'filename': product_picture.filename, 'banner': product}
 
@@ -35,7 +35,6 @@ async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_d
 
 @router.get('/categories/', response_model=list[ProductCategoryOut])
 async def read_product_categories(db: AsyncSession = Depends(get_db)):
-    print(ProductCategoryOut.schema())
     return await get_product_categories(db)
 
 

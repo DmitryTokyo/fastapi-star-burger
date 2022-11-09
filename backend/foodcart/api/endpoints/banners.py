@@ -5,7 +5,7 @@ from starlette.status import HTTP_204_NO_CONTENT, HTTP_201_CREATED, HTTP_200_OK
 from backend.db.db_deps import get_db
 from backend.foodcart.schemas.banners import BannerOut, BannerIn
 from backend.foodcart.crud.crud_banners import create_banner, get_banners, delete_banner
-from backend.star_burger.utils.images import save_image
+from backend.star_burger.utils.images import save_image_to_server
 
 router = APIRouter()
 
@@ -21,7 +21,7 @@ async def create_new_banner(
     banner_in: BannerIn = Depends(),
     db: AsyncSession = Depends(get_db),
 ) -> dict[str, BannerOut | str]:
-    await save_image(banner_picture)
+    await save_image_to_server(banner_picture)
     banner = await create_banner(db, banner_in, banner_picture.filename)
     return {'filename': banner_picture.filename, 'banner': banner}
 
