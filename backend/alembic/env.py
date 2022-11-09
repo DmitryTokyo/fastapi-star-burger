@@ -22,7 +22,7 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 from backend.foodcart.models.banners import Banner
 from backend.foodcart.models.products import Product, ProductCategory
-from backend.foodcart.models.restaurants import Restaurant
+from backend.foodcart.models.restaurants import Restaurant, RestaurantMenuItem
 
 target_metadata = Base.metadata
 
