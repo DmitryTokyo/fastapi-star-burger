@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Extra
 
 from backend.foodcart.schemas.products import ProductOut
 
@@ -19,6 +19,16 @@ class RestaurantOut(RestaurantBase):
     latitude: float | None = None
 
     class Config:
+        orm_mode = True
+
+
+class RestaurantUpdate(BaseModel):
+    title: str | None
+    address: str | None
+    contact_phone: str | None
+
+    class Config:
+        extra = Extra.forbid
         orm_mode = True
 
 

@@ -1,12 +1,12 @@
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import select, delete
+from sqlalchemy import select, delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
 
 from backend.foodcart.models.products import Product
 from backend.foodcart.models.restaurants import Restaurant, RestaurantMenuItem
 from backend.foodcart.schemas.restaurants import (
-    RestaurantIn, RestaurantOut, RestaurantMenuItemsOut, RestaurantMenuItemsIn,
+    RestaurantIn, RestaurantOut, RestaurantMenuItemsOut, RestaurantMenuItemsIn, RestaurantUpdate,
 )
 
 
@@ -23,6 +23,17 @@ async def create_restaurant(db: AsyncSession, restaurant_in: RestaurantIn) -> Re
     await db.commit()
     await db.refresh(restaurant_obj)
     return restaurant_obj
+
+
+async def update_restaurant(db: AsyncSession, restaurant_update: RestaurantUpdate, restaurant_id: int):
+    restaurant_data = restaurant_update.dict(exclude_unset=True)
+    stmt = update(Restaurant).where(Restaurant.id == restaurant_id).values(restaurant_data)
+    await db.execute(stmt)
+    await db.commit()
+
+    stmt = select(Restaurant).where(Restaurant.id == restaurant_id)
+    db_execute = await db.execute(stmt)
+    return db_execute.scalar_one()
 
 
 async def delete_restaurant(db: AsyncSession, restaurant_id: int) -> None:
