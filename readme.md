@@ -7,3 +7,5 @@ This is fast api version of pet project - [star burger](https://github.com/Dmitr
 - python 3.10
 - FastApi
 - Sqlalchemy
+
+**project under developing**
