@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Extra
 
 
 class ProductCategoryBase(BaseModel):
@@ -15,6 +15,14 @@ class ProductCategoryOut(ProductCategoryBase):
     id: int
 
     class Config:
+        orm_mode = True
+
+
+class ProductCategoryUpdate(BaseModel):
+    title: str | None
+
+    class Config:
+        extra = Extra.forbid
         orm_mode = True
 
 
