@@ -42,6 +42,13 @@ async def update_exist_product(product_id: int, product_update: ProductUpdate, d
     return product_obj
 
 
+@router.patch('/{produsct_id}/image', response_model=ProductOut, status_code=HTTP_200_OK)
+async def update_exist_product_image(product_id: int, product_image: UploadFile, db: AsyncSession = Depends(get_db)):
+    await save_image_to_server(product_image)
+    product_update = ProductUpdate(image_url=product_image.filename)
+    return await update_product(db, product_update, product_id)
+
+
 @router.get('/categories/', response_model=list[ProductCategoryOut], status_code=HTTP_200_OK)
 async def read_product_categories(db: AsyncSession = Depends(get_db)):
     return await get_product_categories(db)
