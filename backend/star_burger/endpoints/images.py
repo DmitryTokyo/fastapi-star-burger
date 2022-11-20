@@ -9,7 +9,7 @@ from backend.config.settings import settings
 router = APIRouter()
 
 
-@router.get('/{filename}', responses={200: {'content': {'image/png': {}}}})
+@router.get('/{filename}', responses={200: {'content': {'image/png': {}}}}, include_in_schema=False)
 async def get_image(filename: str) -> FileResponse | None:
     file_path = f'{settings.MEDIA_ROOT}img/{filename}'
     image_file = Path(file_path)
