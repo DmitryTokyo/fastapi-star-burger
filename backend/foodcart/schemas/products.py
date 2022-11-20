@@ -44,3 +44,16 @@ class ProductOut(ProductBase):
 
     class Config:
         orm_mode = True
+
+
+class ProductUpdate(BaseModel):
+    title: str | None
+    price: Decimal
+    ingredients: str | None
+    product_category_id: int | None
+    special_status: bool | None
+    image_url: str | None
+
+    class Config:
+        extra = Extra.forbid
+        orm_mode = True

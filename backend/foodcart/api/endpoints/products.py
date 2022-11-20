@@ -5,10 +5,10 @@ from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 from backend.db.db_deps import get_db
 from backend.foodcart.crud.crud_products import (
     get_products, create_product, get_product_categories, create_product_category, delete_product_category,
-    delete_product, update_product_category,
+    delete_product, update_product_category, update_product,
 )
 from backend.foodcart.schemas.products import (
-    ProductOut, ProductIn, ProductCategoryOut, ProductCategoryIn, ProductCategoryUpdate,
+    ProductOut, ProductIn, ProductCategoryOut, ProductCategoryIn, ProductCategoryUpdate, ProductUpdate,
 )
 from backend.star_burger.utils.images import save_image_to_server
 
@@ -34,6 +34,12 @@ async def create_new_product(
 @router.delete('/', status_code=HTTP_204_NO_CONTENT)
 async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_db)) -> None:
     return await delete_product(db, product_id)
+
+
+@router.patch('/', response_model=ProductOut, status_code=HTTP_200_OK)
+async def update_exist_product(product_id: int, product_update: ProductUpdate, db: AsyncSession = Depends(get_db)):
+    product_obj = await update_product(db, product_update, product_id)
+    return product_obj
 
 
 @router.get('/categories/', response_model=list[ProductCategoryOut], status_code=HTTP_200_OK)
