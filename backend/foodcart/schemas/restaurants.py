@@ -49,3 +49,11 @@ class RestaurantMenuItemsOut(RestaurantMenuItemsBase):
 
     class Config:
         orm_mode = True
+
+
+class RestaurantMenuItemUpdate(BaseModel):
+    product_id: int | None
+    restaurant_id: int | None
+
+    class Config:
+        extra = Extra.forbid

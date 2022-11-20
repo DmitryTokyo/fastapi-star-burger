@@ -7,6 +7,7 @@ from backend.foodcart.models.products import Product
 from backend.foodcart.models.restaurants import Restaurant, RestaurantMenuItem
 from backend.foodcart.schemas.restaurants import (
     RestaurantIn, RestaurantOut, RestaurantMenuItemsOut, RestaurantMenuItemsIn, RestaurantUpdate,
+    RestaurantMenuItemUpdate,
 )
 
 
@@ -67,3 +68,20 @@ async def delete_restaurant_menu_item(db: AsyncSession, restaurant_menu_item_id:
     stmt = delete(RestaurantMenuItem).where(RestaurantMenuItem.id == restaurant_menu_item_id)
     await db.execute(stmt)
     await db.commit()
+
+
+async def update_restaurant_menu_item(
+    db: AsyncSession,
+    restaurant_menu_item_update: RestaurantMenuItemUpdate,
+    restaurant_menu_item_id: int,
+) -> RestaurantMenuItem:
+    restaurant_menu_item_data = restaurant_menu_item_update.dict(exclude_unset=True)
+    stmt = update(
+        RestaurantMenuItem
+    ).where(RestaurantMenuItem.id == restaurant_menu_item_id).values(restaurant_menu_item_data)
+    await db.execute(stmt)
+    await db.commit()
+
+    stmt = select(RestaurantMenuItem).where(RestaurantMenuItem.id == restaurant_menu_item_id)
+    db_execute = await db.execute(stmt)
+    return db_execute.scalar_one()

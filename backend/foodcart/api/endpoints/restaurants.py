@@ -5,10 +5,11 @@ from starlette.status import HTTP_204_NO_CONTENT, HTTP_201_CREATED, HTTP_200_OK
 from backend.db.db_deps import get_db
 from backend.foodcart.crud.crud_restaurants import (
     get_restaurants, create_restaurant, delete_restaurant, get_restaurant_items, create_restaurant_menu_item,
-    delete_restaurant_menu_item, update_restaurant,
+    delete_restaurant_menu_item, update_restaurant, update_restaurant_menu_item,
 )
 from backend.foodcart.schemas.restaurants import (
     RestaurantOut, RestaurantIn, RestaurantMenuItemsOut, RestaurantMenuItemsIn, RestaurantUpdate,
+    RestaurantMenuItemUpdate,
 )
 
 router = APIRouter()
@@ -55,3 +56,17 @@ async def create_new_restaurant_menu_item(
 @router.delete('/restaurant-menu-items', status_code=HTTP_204_NO_CONTENT)
 async def delete_exist_restaurant_menu_item(restaurant_menu_item_id: int, db: AsyncSession = Depends(get_db)):
     await delete_restaurant_menu_item(db, restaurant_menu_item_id)
+
+
+@router.patch('/restaurant-menu-items/{restaurant_menu_item_id}', status_code=HTTP_200_OK)
+async def update_exist_restaurant_menu_item(
+        restaurant_menu_item_id: int,
+        restaurant_menu_item_update: RestaurantMenuItemUpdate,
+        db: AsyncSession = Depends(get_db)
+) -> RestaurantMenuItemsOut:
+    restaurant_menu_item_obj = await update_restaurant_menu_item(
+        db,
+        restaurant_menu_item_update,
+        restaurant_menu_item_id
+    )
+    return restaurant_menu_item_obj

@@ -36,7 +36,7 @@ async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_d
     return await delete_product(db, product_id)
 
 
-@router.patch('/', response_model=ProductOut, status_code=HTTP_200_OK)
+@router.patch('/{product_id}', response_model=ProductOut, status_code=HTTP_200_OK)
 async def update_exist_product(product_id: int, product_update: ProductUpdate, db: AsyncSession = Depends(get_db)):
     product_obj = await update_product(db, product_update, product_id)
     return product_obj
