@@ -58,7 +58,7 @@ async def delete_exist_product_category(category_id: int, db: AsyncSession = Dep
 async def update_exist_product_category(
     product_category_id: int,
     product_category_update: ProductCategoryUpdate,
-    db: AsyncSession = Depends(get_db)
+    db: AsyncSession = Depends(get_db),
 ):
     product_category_obj = await update_product_category(db, product_category_id, product_category_update)
     return product_category_obj

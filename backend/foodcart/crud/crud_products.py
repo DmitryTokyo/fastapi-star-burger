@@ -53,7 +53,7 @@ async def delete_product_category(db: AsyncSession, product_category_id: int) ->
 async def update_product_category(
         db: AsyncSession,
         product_category_id: int,
-        product_category_update: ProductCategoryUpdate
+        product_category_update: ProductCategoryUpdate,
 ) -> ProductCategory:
     product_category_update_data = product_category_update.dict(exclude_unset=True)
     stmt = update(ProductCategory).where(ProductCategory.id == product_category_id).values(product_category_update_data)
