@@ -77,7 +77,7 @@ async def update_restaurant_menu_item(
 ) -> RestaurantMenuItem:
     restaurant_menu_item_data = restaurant_menu_item_update.dict(exclude_unset=True)
     stmt = update(
-        RestaurantMenuItem
+        RestaurantMenuItem,
     ).where(RestaurantMenuItem.id == restaurant_menu_item_id).values(restaurant_menu_item_data)
     await db.execute(stmt)
     await db.commit()

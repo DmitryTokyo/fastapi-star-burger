@@ -62,11 +62,11 @@ async def delete_exist_restaurant_menu_item(restaurant_menu_item_id: int, db: As
 async def update_exist_restaurant_menu_item(
         restaurant_menu_item_id: int,
         restaurant_menu_item_update: RestaurantMenuItemUpdate,
-        db: AsyncSession = Depends(get_db)
+        db: AsyncSession = Depends(get_db),
 ) -> RestaurantMenuItemsOut:
     restaurant_menu_item_obj = await update_restaurant_menu_item(
         db,
         restaurant_menu_item_update,
-        restaurant_menu_item_id
+        restaurant_menu_item_id,
     )
     return restaurant_menu_item_obj
