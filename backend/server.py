@@ -30,7 +30,7 @@ templates = Jinja2Templates(directory='frontend/public')
 app.add_exception_handler(RequestValidationError, validation_schema_exception_handler)
 
 
-@app.get('/', response_class=HTMLResponse)
+@app.get('/', response_class=HTMLResponse, include_in_schema=False)
 async def init_template(request: Request):
     return templates.TemplateResponse('index.html', {'request': request})
 
