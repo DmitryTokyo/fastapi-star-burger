@@ -3,8 +3,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_204_NO_CONTENT, HTTP_201_CREATED, HTTP_200_OK
 
 from backend.db.db_deps import get_db
-from backend.foodcart.schemas.banners import BannerOut, BannerIn
-from backend.foodcart.crud.crud_banners import create_banner, get_banners, delete_banner
+from backend.foodcart.schemas.banners import BannerOut, BannerIn, BannerUpdate
+from backend.foodcart.crud.crud_banners import create_banner, get_banners, delete_banner, update_banner
 from backend.star_burger.utils.images import save_image_to_server
 
 router = APIRouter()
@@ -29,3 +29,23 @@ async def create_new_banner(
 @router.delete('/', status_code=HTTP_204_NO_CONTENT)
 async def delete_exist_banner(banner_id: int, db: AsyncSession = Depends(get_db)) -> None:
     await delete_banner(db, banner_id)
+
+
+@router.patch('/{banner_id}/image', response_model=BannerOut, status_code=HTTP_200_OK)
+async def update_exist_banner_image(
+    banner_id: int,
+    banner_image: UploadFile,
+    db: AsyncSession = Depends(get_db),
+):
+    await save_image_to_server(banner_image)
+    banner_update = BannerUpdate(image_file=banner_image.filename)
+    return await update_banner(db, banner_id, banner_update)
+
+
+@router.patch('/{banner_id}', response_model=BannerOut, status_code=HTTP_200_OK)
+async def update_exist_banner(
+    banner_id: int,
+    banner_update: BannerUpdate,
+    db: AsyncSession = Depends(get_db),
+):
+    return await update_banner(db, banner_id, banner_update)

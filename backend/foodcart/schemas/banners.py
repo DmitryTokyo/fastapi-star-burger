@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Extra
 
 
 class BannerBase(BaseModel):
@@ -16,4 +16,15 @@ class BannerOut(BannerBase):
     image_file: str
 
     class Config:
+        orm_mode = True
+
+
+class BannerUpdate(BaseModel):
+    title: str | None
+    description: str | None
+    banner_order: int | None
+    image_file: str | None
+
+    class Config:
+        extra = Extra.forbid
         orm_mode = True

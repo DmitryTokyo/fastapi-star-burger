@@ -1,10 +1,10 @@
 from fastapi.encoders import jsonable_encoder
-from sqlalchemy import delete
+from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
 from backend.foodcart.models.banners import Banner
-from backend.foodcart.schemas.banners import BannerIn
+from backend.foodcart.schemas.banners import BannerIn, BannerUpdate
 
 
 async def get_banners(db: AsyncSession) -> list[Banner]:
@@ -27,3 +27,18 @@ async def delete_banner(db: AsyncSession, banner_id: int) -> None:
     stmt = delete(Banner).where(Banner.id == banner_id)
     await db.execute(stmt)
     await db.commit()
+
+
+async def update_banner(
+        db: AsyncSession,
+        banner_id: int,
+        banner_update: BannerUpdate,
+) -> Banner:
+    banner_data = banner_update.dict(exclude_unset=True)
+    stmt = update(Banner).where(Banner.id == banner_id).values(banner_data)
+    await db.execute(stmt)
+    await db.commit()
+
+    stmt = select(Banner).where(Banner.id == banner_id)
+    db_execute = await db.execute(stmt)
+    return db_execute.scalar_one()
