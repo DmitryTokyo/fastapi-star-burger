@@ -18,3 +18,6 @@ check:
 
 ipython:
 	ipython -i ipython_startup.py
+
+test:
+	pytest -vvs
