@@ -1,0 +1,5 @@
+[run]
+omit =
+    backend/foodcart/tests/*
+    backend/foodcart/schemas/*
+    backend/foodcart/models/*
