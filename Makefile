@@ -20,4 +20,4 @@ ipython:
 	ipython -i ipython_startup.py
 
 test:
-	pytest -vvs
+	pytest -v --cov=backend/foodcart --cov-fail-under=55 --cov-report term backend/foodcart
