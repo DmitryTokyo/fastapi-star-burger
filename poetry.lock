@@ -22,6 +22,17 @@ typing-extensions = "*"
 hiredis = ["hiredis (>=1.0)"]
 
 [[package]]
+name = "aiosqlite"
+version = "0.17.0"
+description = "asyncio bridge to the standard sqlite3 module"
+category = "main"
+optional = false
+python-versions = ">=3.6"
+
+[package.dependencies]
+typing_extensions = ">=3.7.2"
+
+[[package]]
 name = "alembic"
 version = "1.8.1"
 description = "A database migration tool for SQLAlchemy."
@@ -1504,11 +1515,12 @@ email = ["email-validator"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.10"
-content-hash = "6c3fe99e78848c23b4c641e93d7171aecfbbbc4dec7ca38343bcae1093561fcb"
+content-hash = "bb2e1c76273f16dfa6235dba5284c405a3be83b8e217b463af22fba5b5661893"
 
 [metadata.files]
 aiofiles = []
 aioredis = []
+aiosqlite = []
 alembic = []
 anyio = []
 appnope = []

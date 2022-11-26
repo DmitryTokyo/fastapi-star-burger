@@ -19,6 +19,7 @@ flake8 = "^5.0.4"
 aioredis = "^2.0.1"
 sqladmin = "^0.6.1"
 ipython = "^8.6.0"
+aiosqlite = "^0.17.0"
 
 [tool.poetry.dev-dependencies]
 autopep8 = "^1.7.0"
