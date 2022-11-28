@@ -30,8 +30,8 @@ async def test_get_banners(insert_object_to_db, test_session):
     'banner_in, picture_filename',
     [
         (BannerIn(title='test banner title', description='test banner description', banner_order=2), 'banner.jpg'),
-        (BannerIn(title='test one more banner title', description='test ', banner_order=3), 'banner_one_more.jpg')
-    ]
+        (BannerIn(title='test one more banner title', description='test ', banner_order=3), 'banner_one_more.jpg'),
+    ],
 )
 async def test_create_banner(test_session, get_all_object_from_db, banner_in, picture_filename):
     banner = await create_banner(test_session, banner_in, picture_filename)
