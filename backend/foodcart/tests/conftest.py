@@ -42,7 +42,7 @@ async def test_session(test_db_engine):
 
 
 @pytest_asyncio.fixture(scope='function')
-async def insert_query_to_db(test_db_engine):
+async def insert_object_to_db(test_db_engine):
     async def _insert_query(query_config):
         async with test_db_engine.connect() as conn:
             async with conn.begin():
@@ -52,11 +52,10 @@ async def insert_query_to_db(test_db_engine):
 
 
 @pytest_asyncio.fixture(scope='function')
-async def get_query_to_db(test_db_engine):
+async def get_all_object_from_db(test_session):
     async def _get_query(query):
-        async with test_db_engine.connect() as conn:
-            result = await conn.execute(query)
-        return result
+        result = await test_session.execute(query)
+        return result.scalars().all()
     return _get_query
 
 
