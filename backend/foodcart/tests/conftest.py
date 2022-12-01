@@ -1,4 +1,5 @@
 import asyncio
+from sqlalchemy import select
 
 import pytest
 import pytest_asyncio
@@ -42,12 +43,14 @@ async def test_session(test_db_engine):
 
 
 @pytest_asyncio.fixture(scope='function')
-async def insert_object_to_db(test_db_engine):
-    async def _insert_query(query_config):
-        async with test_db_engine.connect() as conn:
-            async with conn.begin():
-                await conn.execute(query_config)
-            await conn.commit()
+async def insert_object_to_db(test_session):
+    async def _insert_query(query_config, model):
+        execution_result = await test_session.execute(query_config)
+        await test_session.commit()
+        session_execution = await test_session.execute(
+            select(model).where(model.id == execution_result.inserted_primary_key[0]),
+        )
+        return session_execution.scalar_one()
     return _insert_query
 
 
@@ -56,6 +59,14 @@ async def get_all_object_from_db(test_session):
     async def _get_query(query):
         result = await test_session.execute(query)
         return result.scalars().all()
+    return _get_query
+
+
+@pytest_asyncio.fixture(scope='function')
+async def get_single_object_from_db(test_session):
+    async def _get_query(query):
+        result = await test_session.execute(query)
+        return result.scalar_one()
     return _get_query
 
 
