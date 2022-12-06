@@ -10,9 +10,9 @@ class Restaurant(Base):
     __tablename__ = 'restaurant'
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column('Restaurant title', String(100))
+    title = Column(String(100))
     address = Column(String(100))
-    contact_phone = Column('Contact phone', String(50))
+    contact_phone = Column(String(50))
     longitude = Column(Float, nullable=True)
     latitude = Column(Float, nullable=True)
 
@@ -27,7 +27,7 @@ class RestaurantMenuItem(Base):
     )
 
     id = Column(Integer, primary_key=True, index=True)
-    available = Column('Product available in menu', Boolean, default=True)
+    available = Column(Boolean, default=True)
     product_id = Column(Integer, ForeignKey('product.id'))
     product = relationship('Product', backref='menu_items')
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
