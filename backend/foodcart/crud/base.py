@@ -36,14 +36,13 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db_execution = await db.execute(stmt)
         return db_execution.scalar_one()
 
-    async def update(self, db: AsyncSession, schema_update: UpdateSchemaType, obj_id: int) -> ModelType:
+    async def update(self, db: AsyncSession, schema_update: UpdateSchemaType, obj_id: int) -> None:
         obj_update_data = schema_update.dict(exclude_unset=True)
         stmt = update(self.model).where(self.model.id == obj_id).values(obj_update_data)
         await db.execute(stmt)
         await db.commit()
 
-    async def delete(self, db: AsyncSession, obj_id: int) -> int:
+    async def delete(self, db: AsyncSession, obj_id: int) -> None:
         stmt = delete(self.model).where(self.model.id == obj_id)
         await db.execute(stmt)
         await db.commit()
-        return obj_id
