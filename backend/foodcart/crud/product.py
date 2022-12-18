@@ -13,6 +13,11 @@ class CRUDProduct(CRUDBase[Product, ProductIn, ProductUpdate]):
         db_execution = await db.execute(stmt)
         return db_execution.scalars().all()
 
+    async def get_single(self, db: AsyncSession, obj_id: int) -> ModelType:
+        stmt = select(self.model).where(self.model.id == obj_id).options(selectinload('product_category'))
+        db_execution = await db.execute(stmt)
+        return db_execution.scalar_one()
+
 
 class CRUDProductCategory(CRUDBase[ProductCategory, ProductCategoryIn, ProductCategoryUpdate]):
     pass
