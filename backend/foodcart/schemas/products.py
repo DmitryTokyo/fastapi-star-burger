@@ -48,7 +48,7 @@ class ProductOut(ProductBase):
 
 class ProductUpdate(BaseModel):
     title: str | None
-    price: Decimal
+    price: Decimal | None
     ingredients: str | None
     product_category_id: int | None
     special_status: bool | None
