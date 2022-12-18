@@ -5,8 +5,9 @@ from sqlalchemy.orm import selectinload
 from backend.foodcart.crud.base import CRUDBase, ModelType
 from backend.foodcart.models.products import Product
 from backend.foodcart.models.restaurants import Restaurant, RestaurantMenuItem
-from backend.foodcart.schemas.restaurants import RestaurantIn, RestaurantUpdate, RestaurantMenuItemsIn, \
-    RestaurantMenuItemUpdate
+from backend.foodcart.schemas.restaurants import (
+    RestaurantIn, RestaurantUpdate, RestaurantMenuItemsIn, RestaurantMenuItemUpdate,
+)
 
 
 class CRUDRestaurant(CRUDBase[Restaurant, RestaurantIn, RestaurantUpdate]):

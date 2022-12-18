@@ -64,9 +64,10 @@ async def update_exist_restaurant_menu_item(
         restaurant_menu_item_update: RestaurantMenuItemUpdate,
         db: AsyncSession = Depends(get_db),
 ) -> RestaurantMenuItemsOut:
-    restaurant_menu_item_obj = await crud_restaurant_menu_item.update(
+    await crud_restaurant_menu_item.update(
         db,
         restaurant_menu_item_update,
         restaurant_menu_item_id,
     )
-    return restaurant_menu_item_obj
+
+    return await crud_restaurant_menu_item.get_single(db, restaurant_menu_item_id)
