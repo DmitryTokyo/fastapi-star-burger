@@ -36,15 +36,16 @@ async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_d
 
 @router.patch('/{product_id}', response_model=ProductOut, status_code=HTTP_200_OK)
 async def update_exist_product(product_id: int, product_update: ProductUpdate, db: AsyncSession = Depends(get_db)):
-    product_obj = await crud_product.update(db, product_update, product_id)
-    return product_obj
+    await crud_product.update(db, product_update, product_id)
+    return crud_product.get_single(db, product_id)
 
 
 @router.patch('/{produsct_id}/image', response_model=ProductOut, status_code=HTTP_200_OK)
 async def update_exist_product_image(product_id: int, product_image: UploadFile, db: AsyncSession = Depends(get_db)):
     await save_image_to_server(product_image)
     product_update = ProductUpdate(image_url=product_image.filename)
-    return await crud_product.update(db, product_update, product_id)
+    await crud_product.update(db, product_update, product_id)
+    return await crud_product.get_single(db, product_id)
 
 
 @router.get('/categories/', response_model=list[ProductCategoryOut], status_code=HTTP_200_OK)
@@ -71,5 +72,5 @@ async def update_exist_product_category(
     product_category_update: ProductCategoryUpdate,
     db: AsyncSession = Depends(get_db),
 ):
-    product_category_obj = await crud_product_category.update(db, product_category_update, product_category_id)
-    return product_category_obj
+    await crud_product_category.update(db, product_category_update, product_category_id)
+    return await crud_product_category.get_single(db, product_category_id)
