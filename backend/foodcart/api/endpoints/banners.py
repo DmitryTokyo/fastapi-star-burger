@@ -50,7 +50,8 @@ async def update_exist_banner_image(
 
     await save_image_to_server(banner_image)
     banner_update = BannerUpdate(image_file=banner_image.filename)
-    return await crud_banner.update(db, banner_update, banner_id)
+    await crud_banner.update(db, banner_update, banner_id)
+    return await crud_banner.get_single(db, banner_id)
 
 
 @router.patch('/{banner_id}', response_model=BannerOut, status_code=HTTP_200_OK)
