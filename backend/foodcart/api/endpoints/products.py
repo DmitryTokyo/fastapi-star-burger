@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, UploadFile, HTTPException
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
-from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from starlette.status import HTTP_200_OK, HTTP_201_CREATED
 
 from backend.db.db_deps import get_db
 from backend.foodcart.schemas.products import (
@@ -30,13 +30,14 @@ async def create_new_product(
     return {'filename': product_picture.filename, 'banner': product}
 
 
-@router.delete('/', status_code=HTTP_204_NO_CONTENT)
-async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_db)) -> None:
+@router.delete('/', status_code=HTTP_200_OK)
+async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_db)) -> dict:
     try:
         await crud_product.get_single(db, product_id)
     except NoResultFound:
         raise HTTPException(status_code=404, detail='Object does not found')
-    return await crud_product.delete(db, product_id)
+    await crud_product.delete(db, product_id)
+    return {'deleted object': product_id}
 
 
 @router.patch('/{product_id}', response_model=ProductOut, status_code=HTTP_200_OK)
@@ -75,13 +76,14 @@ async def create_new_product_category(
     return await crud_product_category.create(db, category_in)
 
 
-@router.delete('/categories/', status_code=204)
-async def delete_exist_product_category(product_category_id: int, db: AsyncSession = Depends(get_db)) -> None:
+@router.delete('/categories/', status_code=HTTP_200_OK)
+async def delete_exist_product_category(product_category_id: int, db: AsyncSession = Depends(get_db)) -> dict:
     try:
         await crud_product_category.get_single(db, product_category_id)
     except NoResultFound:
         raise HTTPException(status_code=404, detail='Object does not found')
-    return await crud_product_category.delete(db, product_category_id)
+    await crud_product_category.delete(db, product_category_id)
+    return {'deleted object': product_category_id}
 
 
 @router.patch('/categories/{product_categories_id}', response_model=ProductCategoryOut, status_code=HTTP_200_OK)

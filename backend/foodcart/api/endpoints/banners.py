@@ -33,8 +33,8 @@ async def delete_exist_banner(banner_id: int, db: AsyncSession = Depends(get_db)
         await crud_banner.get_single(db, banner_id)
     except NoResultFound:
         raise HTTPException(status_code=404, detail='Object does not found')
-    deleted_banner_id = await crud_banner.delete(db, banner_id)
-    return {'deleted banner id': deleted_banner_id}
+    await crud_banner.delete(db, banner_id)
+    return {'deleted banner id': banner_id}
 
 
 @router.patch('/{banner_id}/image', response_model=BannerOut, status_code=HTTP_200_OK)
@@ -65,4 +65,4 @@ async def update_exist_banner(
     except NoResultFound:
         raise HTTPException(status_code=404, detail='Object does not found')
 
-    return await crud_banner(db, banner_update, banner_id)
+    return await crud_banner.update(db, banner_update, banner_id)
