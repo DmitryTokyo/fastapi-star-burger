@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Depends, UploadFile
+from fastapi import APIRouter, Depends, UploadFile, HTTPException
+from sqlalchemy.exc import NoResultFound
 from sqlalchemy.ext.asyncio import AsyncSession
 from starlette.status import HTTP_200_OK, HTTP_201_CREATED, HTTP_204_NO_CONTENT
 
@@ -31,17 +32,30 @@ async def create_new_product(
 
 @router.delete('/', status_code=HTTP_204_NO_CONTENT)
 async def delete_exist_product(product_id: int, db: AsyncSession = Depends(get_db)) -> None:
+    try:
+        await crud_product.get_single(db, product_id)
+    except NoResultFound:
+        raise HTTPException(status_code=404, detail='Object does not found')
     return await crud_product.delete(db, product_id)
 
 
 @router.patch('/{product_id}', response_model=ProductOut, status_code=HTTP_200_OK)
 async def update_exist_product(product_id: int, product_update: ProductUpdate, db: AsyncSession = Depends(get_db)):
+    try:
+        await crud_product.get_single(db, product_id)
+    except NoResultFound:
+        raise HTTPException(status_code=404, detail='Object does not found')
     await crud_product.update(db, product_update, product_id)
     return crud_product.get_single(db, product_id)
 
 
 @router.patch('/{produsct_id}/image', response_model=ProductOut, status_code=HTTP_200_OK)
 async def update_exist_product_image(product_id: int, product_image: UploadFile, db: AsyncSession = Depends(get_db)):
+    try:
+        await crud_product.get_single(db, product_id)
+    except NoResultFound:
+        raise HTTPException(status_code=404, detail='Object does not found')
+
     await save_image_to_server(product_image)
     product_update = ProductUpdate(image_url=product_image.filename)
     await crud_product.update(db, product_update, product_id)
@@ -62,8 +76,12 @@ async def create_new_product_category(
 
 
 @router.delete('/categories/', status_code=204)
-async def delete_exist_product_category(category_id: int, db: AsyncSession = Depends(get_db)) -> None:
-    return await crud_product_category.delete(db, category_id)
+async def delete_exist_product_category(product_category_id: int, db: AsyncSession = Depends(get_db)) -> None:
+    try:
+        await crud_product_category.get_single(db, product_category_id)
+    except NoResultFound:
+        raise HTTPException(status_code=404, detail='Object does not found')
+    return await crud_product_category.delete(db, product_category_id)
 
 
 @router.patch('/categories/{product_categories_id}', response_model=ProductCategoryOut, status_code=HTTP_200_OK)
@@ -72,5 +90,10 @@ async def update_exist_product_category(
     product_category_update: ProductCategoryUpdate,
     db: AsyncSession = Depends(get_db),
 ):
+    try:
+        await crud_product_category.get_single(db, product_category_id)
+    except NoResultFound:
+        raise HTTPException(status_code=404, detail='Object does not found')
+
     await crud_product_category.update(db, product_category_update, product_category_id)
     return await crud_product_category.get_single(db, product_category_id)
