@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     API_V1_STR: str = '/api'
     SECRET_KEY: str = os.environ.get('SECRET_KEY', default=secrets.token_urlsafe(32))
 
-    DB_URL: str = 'postgresql+asyncpg://andimeon:565651db@localhost:5432/star_burger_fast'
+    DB_URL: str = os.getenv('DB_URL')
     BACKEND_CORS_ORIGINS: list[AnyHttpUrl] = [
         'http://localhost',
         'http://localhost:8000',
