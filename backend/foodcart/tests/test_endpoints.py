@@ -1,6 +1,5 @@
 
-
-async def test_get_banners(async_client, banner_schema, mocker):
+async def test_read_banners(async_client, banner_schema, mocker):
     expected_result = [banner_schema.dict()]
     mocker.patch(
         'backend.foodcart.api.endpoints.banners.crud_banner.get_multi',
