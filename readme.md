@@ -9,3 +9,5 @@ This is fast api version of pet project - [star burger](https://github.com/Dmitr
 - Sqlalchemy
 
 **project under developing**
+
+openssl rand -hex 32

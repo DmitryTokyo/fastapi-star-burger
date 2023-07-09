@@ -1,4 +1,7 @@
 import asyncio
+import os
+from pathlib import Path
+
 from sqlalchemy import select
 
 import pytest
@@ -79,3 +82,27 @@ async def async_client():
 @pytest_asyncio.fixture
 def banner_schema():
     return BannerOut(title='test title', description='test description', banner_order=1, id=1, image_file='image.jpg')
+
+
+class MockUploadFile:
+    def __init__(self, file_path):
+        self.file_path = file_path
+        self.filename = Path(file_path).name
+
+    async def read(self):
+        with open(self.file_path, 'rb') as file:
+            return file.read()
+
+
+@pytest.fixture
+def mock_upload_file():
+    # Create a temporary file for testing
+    with tempfile.NamedTemporaryFile(delete=False) as tmp_file:
+        tmp_file.write(b'test_content')
+        tmp_file_path = tmp_file.name
+
+    mock_file = MockUploadFile(tmp_file_path)
+
+    yield mock_file
+
+    # Manually remove the temporary file
